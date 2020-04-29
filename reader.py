@@ -21,6 +21,7 @@ class Reader(object):
 		# Create the tabula dataframe (which is also a pandas dataframe)
 		self.reader_df = tabula.read_pdf(file_path, pages="all")
 		self.df = self.reader_df[-1]
+		print(self.df.head())
 		# RENAME the columns
 		self.df.columns = ["Cities-0", "Deaths-0",
 			"Cities-1", "Cities-1-cases", "Deaths-1",
@@ -87,7 +88,7 @@ class Reader(object):
 				c_dict["confirmed"] = int(c_cases)
 
 				# Get the deaths
-				if deaths_0[i] == '-':
+				if deaths_0[i] == '-' or isinstance(deaths_0[i], float):
 					c_dict["deaths"] = 0
 				else:
 					c_dict["deaths"] = int(deaths_0[i])
@@ -191,8 +192,8 @@ class Reader(object):
 
 
 if __name__ == "__main__":
-	r = Reader("pdfs/24.04.2020_Boletim_epidemiologico_COVID-19_MG.pdf",
-		"24.04.2020")
+	r = Reader("pdfs/29.04.2020_Boletim_epidemiologico_COVID-19_MG.pdf",
+		"29.04.2020")
 	y = r.getDict()
 	for i in y:
 		print(i)
