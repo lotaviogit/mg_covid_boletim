@@ -19,7 +19,6 @@ class MGSpider(scrapy.Spider):
     def parse(self, response):
         current_day = datetime.today().strftime('%d.%m.%Y')
         page = response.url.split("/")[-2]
-        # filename = 'quotes-%s.pdf' % page
         filename = f'{current_day}_{page}.pdf'
         with open(filename, 'wb') as f:
             f.write(response.body)
