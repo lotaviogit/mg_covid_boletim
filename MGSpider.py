@@ -1,7 +1,7 @@
 import string
 import scrapy
 from datetime import datetime, timedelta
-import tabula
+
 
 
 class MGSpider(BaseCovid19Spider):
@@ -24,8 +24,6 @@ class MGSpider(BaseCovid19Spider):
             f.write(response.body)
         self.log('Opened file %s' % filename)
 
-        # df = tabula.read_pdf(filename, pages="all")[-1]
-        # return self.parse_pdf(df)
         return self.parse_pdf(filename)
 
     def parse_pdf(self, file_path):
@@ -68,6 +66,13 @@ class MGSpider(BaseCovid19Spider):
                         if i[j].text.rstrip().split(' ')[0] == "Municípios":
                             # This is the end. Just return
                             break
+                        # Check if it is not a city name
+                        elif i[j].text.rstrip().split(' ')[0].lower() == 'outro':
+                            j+=1
+                            pass
+                        elif i[j].text.rstrip().split(' ')[0].lower() == 'em':
+                            j+=1
+                            pass
                         else:
                             # It is a city that needs to be added
                             name = i[j].text.rstrip()
