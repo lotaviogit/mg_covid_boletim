@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import tabula
 
 
-class MGSpider(scrapy.Spider):
+class MGSpider(BaseCovid19Spider):
     name = "MG"
 
     def start_requests(self):
